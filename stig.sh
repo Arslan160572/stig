@@ -54,28 +54,28 @@ function V71987 () {
 
 #Verify system is using tmp mount service, V-72065
 function V72065 () {
-    local Regex1="^(\s*)enabled\s*$"
-    local Success="System is set to create a separate file system for /tmp, per V-72065."
-    local Failure="Failed to set system to create a separate file system for /tmp, not in compliance V-72065."
+ #   local Regex1="^(\s*)enabled\s*$"
+ #   local Success="System is set to create a separate file system for /tmp, per V-72065."
+ #   local Failure="Failed to set system to create a separate file system for /tmp, not in compliance V-72065."
 
-    echo
-    systemctl enable tmp.mount > /dev/null
-    (systemctl is-enabled tmp.mount | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
+ #   echo
+ #   systemctl enable tmp.mount > /dev/null
+ #   (systemctl is-enabled tmp.mount | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set mx concurrent sessions to 10, V-72217
 function V72217 () {
-    local Regex1="^(\s*)#*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$/\* hard maxlogins 10\2/"
-    local Regex3="^(\s*)\*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)\*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$/\* hard maxlogins 10\2/"
-    local Regex5="^(\s*)\*\s*hard\s*maxlogins\s*10?\s*$"
-    local Success="Set max concurrent sessions to 10, per V-72217."
-    local Failure="Failed to set max concurrent sessions to 10, not in compliance V-72217."
+#    local Regex1="^(\s*)#*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$/\* hard maxlogins 10\2/"
+#    local Regex3="^(\s*)\*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)\*\s*hard\s*maxlogins\s+\S+(\s*#.*)?\s*$/\* hard maxlogins 10\2/"
+#    local Regex5="^(\s*)\*\s*hard\s*maxlogins\s*10?\s*$"
+#    local Success="Set max concurrent sessions to 10, per V-72217."
+#    local Failure="Failed to set max concurrent sessions to 10, not in compliance V-72217."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/security/limits.conf && sed -ri "$Regex2" /etc/security/limits.conf) || (grep -E -q "$Regex3" /etc/security/limits.conf && sed -ri "$Regex4" /etc/security/limits.conf) ) || echo "* hard maxlogins 10" >> /etc/security/limits.conf
-    (grep -E -q "$Regex5" /etc/security/limits.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/security/limits.conf && sed -ri "$Regex2" /etc/security/limits.conf) || (grep -E -q "$Regex3" /etc/security/limits.conf && sed -ri "$Regex4" /etc/security/limits.conf) ) || echo "* hard maxlogins 10" >> /etc/security/limits.conf
+#    (grep -E -q "$Regex5" /etc/security/limits.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 ##Apply all compatible CATIII
@@ -206,23 +206,23 @@ function V71917 () {
 
 #Set passwords to use SHA512, V-71919
 function V71919 () {
-    local Regex1="password\s*hashing\s*algorithm\s*is\s*sha512\s*$"
-    local Success="Passwords are set to use SHA512 encryption, per V-71919."
-    local Failure="Failed to set passwords to use SHA512 encryption, not in compliance with V-71919."
+#    local Regex1="password\s*hashing\s*algorithm\s*is\s*sha512\s*$"
+#    local Success="Passwords are set to use SHA512 encryption, per V-71919."
+#    local Failure="Failed to set passwords to use SHA512 encryption, not in compliance with V-71919."
 
-    echo
-    authconfig --passalgo=sha512 --update
-    (authconfig --test | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    authconfig --passalgo=sha512 --update
+#    (authconfig --test | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set system to create SHA512 hashed passwords, V-71921
 function V71921 () {
-    local Regex1="^(\s*)ENCRYPT_METHOD\s*SHA512\s*$"
-    local Success="Passwords are set to be created with SHA512 hash, per V-71921."
-    local Failure="Failed to set passwords to be created with SHA512 hash, not in compliance with V-71921."
+#    local Regex1="^(\s*)ENCRYPT_METHOD\s*SHA512\s*$"
+#    local Success="Passwords are set to be created with SHA512 hash, per V-71921."
+#    local Failure="Failed to set passwords to be created with SHA512 hash, not in compliance with V-71921."
 
-    echo
-    (grep -E -q "$Regex1" /etc/login.defs && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    (grep -E -q "$Regex1" /etc/login.defs && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set password min lifetome to 1 day, V-71925
@@ -330,17 +330,17 @@ function V71951 () {
 
 # Set SSH HostbasedAuthentication to no, V-71959
 function V71959 () {
-    local Regex1="^(\s*)#HostbasedAuthentication\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#HostbasedAuthentication\s+\S+(\s*#.*)?\s*$/\HostbasedAuthentication no\2/"
-    local Regex3="^(\s*)HostbasedAuthentication\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)HostbasedAuthentication\s+\S+(\s*#.*)?\s*$/\HostbasedAuthentication no\2/"
-    local Regex5="^(\s*)HostbasedAuthentication\s*no\s*$"
-    local Success="Set OS to not allow non-certificate trusted host SSH to log onto the system, per V-71959."
-    local Failure="Failed to set OS to not allow non-certificate trusted host SSH to log onto the system, not in compliance with V-71959."
+#    local Regex1="^(\s*)#HostbasedAuthentication\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#HostbasedAuthentication\s+\S+(\s*#.*)?\s*$/\HostbasedAuthentication no\2/"
+#    local Regex3="^(\s*)HostbasedAuthentication\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)HostbasedAuthentication\s+\S+(\s*#.*)?\s*$/\HostbasedAuthentication no\2/"
+#    local Regex5="^(\s*)HostbasedAuthentication\s*no\s*$"
+#    local Success="Set OS to not allow non-certificate trusted host SSH to log onto the system, per V-71959."
+#    local Failure="Failed to set OS to not allow non-certificate trusted host SSH to log onto the system, not in compliance with V-71959."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) )|| echo "HostbasedAuthentication no" >> /etc/ssh/sshd_config
-    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) )|| echo "HostbasedAuthentication no" >> /etc/ssh/sshd_config
+#    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit of privileged functions, V-72095
@@ -366,286 +366,286 @@ function V72095 () {
 
 #Set audit to audit of successful/unsuccessful attempts to use chown, V-72097
 function V72097 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+chown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+chown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use chown is enabled on 32bit systems, per V-72097."
-    local Success64="Auditing of successful/unsuccessful attempts to use chown is enabled on 64bit systems, per V-72097."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use chown on 32bit systems, not in compliance with V-72097."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use chown on 64bit systems, not in compliance with V-72097."
+#    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+chown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+#    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+chown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+#    local Success32="Auditing of successful/unsuccessful attempts to use chown is enabled on 32bit systems, per V-72097."
+#    local Success64="Auditing of successful/unsuccessful attempts to use chown is enabled on 64bit systems, per V-72097."
+#    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use chown on 32bit systems, not in compliance with V-72097."
+#    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use chown on 64bit systems, not in compliance with V-72097."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+#    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S chown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+#    echo
+#    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fchown, V-72099
 function V72099 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fchown is enabled on 32bit systems, per V-72099."
-    local Success64="Auditing of successful/unsuccessful attempts to use fchown is enabled on 64bit systems, per V-72099."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchown on 32bit systems, not in compliance with V-72099."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchown on 64bit systems, not in compliance with V-72099."
+#    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+#    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+#    local Success32="Auditing of successful/unsuccessful attempts to use fchown is enabled on 32bit systems, per V-72099."
+#    local Success64="Auditing of successful/unsuccessful attempts to use fchown is enabled on 64bit systems, per V-72099."
+#    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchown on 32bit systems, not in compliance with V-72099."
+#    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchown on 64bit systems, not in compliance with V-72099."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+#    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+#    echo
+#    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use lchown, V-72101
 function V72101 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use lchown is enabled on 32bit systems, per V-72101."
-    local Success64="Auditing of successful/unsuccessful attempts to use lchown is enabled on 64bit systems, per V-72101."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lchown on 32bit systems, not in compliance with V-72101."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lchown on 64bit systems, not in compliance with V-72101."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lchown\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use lchown is enabled on 32bit systems, per V-72101."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use lchown is enabled on 64bit systems, per V-72101."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lchown on 32bit systems, not in compliance with V-72101."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lchown on 64bit systems, not in compliance with V-72101."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fchownat, V-72103
 function V72103 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchownat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchownat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fchownat is enabled on 32bit systems, per V-72103."
-    local Success64="Auditing of successful/unsuccessful attempts to use fchownat is enabled on 64bit systems, per V-72103."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchownat on 32bit systems, not in compliance with V-72103."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchownat on 64bit systems, not in compliance with V-72103."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchownat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchownat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use fchownat is enabled on 32bit systems, per V-72103."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use fchownat is enabled on 64bit systems, per V-72103."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchownat on 32bit systems, not in compliance with V-72103."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchownat on 64bit systems, not in compliance with V-72103."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchownat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use chmod, V-72105
 function V72105 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+chmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+chmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use chmod is enabled on 32bit systems, per V-72105."
-    local Success64="Auditing of successful/unsuccessful attempts to use chmod is enabled on 64bit systems, per V-72105."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use chmod on 32bit systems, not in compliance with V-72105."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use chmod on 64bit systems, not in compliance with V-72105."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+chmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+chmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use chmod is enabled on 32bit systems, per V-72105."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use chmod is enabled on 64bit systems, per V-72105."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use chmod on 32bit systems, not in compliance with V-72105."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use chmod on 64bit systems, not in compliance with V-72105."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S chmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fchmod, V-72107
 function V72107 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fchmod is enabled on 32bit systems, per V-72107."
-    local Success64="Auditing of successful/unsuccessful attempts to use fchmod is enabled on 64bit systems, per V-72107."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchmod on 32bit systems, not in compliance with V-72107."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchmod on 64bit systems, not in compliance with V-72107."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchmod\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use fchmod is enabled on 32bit systems, per V-72107."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use fchmod is enabled on 64bit systems, per V-72107."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchmod on 32bit systems, not in compliance with V-72107."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchmod on 64bit systems, not in compliance with V-72107."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchmod -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fchmodat, V-72109
 function V72109 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchmodat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchmodat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fchmodat is enabled on 32bit systems, per V-72109."
-    local Success64="Auditing of successful/unsuccessful attempts to use fchmodat is enabled on 64bit systems, per V-72109."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchmodat on 32bit systems, not in compliance with V-72109."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchmodat on 64bit systems, not in compliance with V-72109."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fchmodat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fchmodat\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use fchmodat is enabled on 32bit systems, per V-72109."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use fchmodat is enabled on 64bit systems, per V-72109."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fchmodat on 32bit systems, not in compliance with V-72109."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fchmodat on 64bit systems, not in compliance with V-72109."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use setxattr, V-72111
 function V72111 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+setxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+setxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use setxattr is enabled on 32bit systems, per V-72111."
-    local Success64="Auditing of successful/unsuccessful attempts to use setxattr is enabled on 64bit systems, per V-72111."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use setxattr on 32bit systems, not in compliance with V-72111."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use setxattr on 64bit systems, not in compliance with V-72111."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+setxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+setxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use setxattr is enabled on 32bit systems, per V-72111."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use setxattr is enabled on 64bit systems, per V-72111."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use setxattr on 32bit systems, not in compliance with V-72111."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use setxattr on 64bit systems, not in compliance with V-72111."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S setxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fsetxattr, V-72113
 function V72113 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fsetxattr is enabled on 32bit systems, per V-72113."
-    local Success64="Auditing of successful/unsuccessful attempts to use fsetxattr is enabled on 64bit systems, per V-72113."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fsetxattr on 32bit systems, not in compliance with V-72113."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fsetxattr on 64bit systems, not in compliance with V-72113."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use fsetxattr is enabled on 32bit systems, per V-72113."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use fsetxattr is enabled on 64bit systems, per V-72113."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fsetxattr on 32bit systems, not in compliance with V-72113."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fsetxattr on 64bit systems, not in compliance with V-72113."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use lsetxattr, V-72115
 function V72115 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use lsetxattr is enabled on 32bit systems, per V-72215."
-    local Success64="Auditing of successful/unsuccessful attempts to use lsetxattr is enabled on 64bit systems, per V-72215."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lsetxattr on 32bit systems, not in compliance with V-72215."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lsetxattr on 64bit systems, not in compliance with V-72215."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lsetxattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use lsetxattr is enabled on 32bit systems, per V-72215."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use lsetxattr is enabled on 64bit systems, per V-72215."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lsetxattr on 32bit systems, not in compliance with V-72215."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lsetxattr on 64bit systems, not in compliance with V-72215."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lsetxattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use removexattr, V-72117
 function V72117 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+removexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+removexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use removexattr is enabled on 32bit systems, per V-72117."
-    local Success64="Auditing of successful/unsuccessful attempts to use removexattr is enabled on 64bit systems, per V-72117."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use removexattr on 32bit systems, not in compliance with V-72117."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use removexattr on 64bit systems, not in compliance with V-72117."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+removexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+removexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use removexattr is enabled on 32bit systems, per V-72117."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use removexattr is enabled on 64bit systems, per V-72117."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use removexattr on 32bit systems, not in compliance with V-72117."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use removexattr on 64bit systems, not in compliance with V-72117."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S removexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use fremovexattr, V-72119
 function V72119 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use fremovexattr is enabled on 32bit systems, per V-72119."
-    local Success64="Auditing of successful/unsuccessful attempts to use fremovexattr is enabled on 64bit systems, per V-72119."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fremovexattr on 32bit systems, not in compliance with V-72119."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fremovexattr on 64bit systems, not in compliance with V-72119."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+fremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+fremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use fremovexattr is enabled on 32bit systems, per V-72119."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use fremovexattr is enabled on 64bit systems, per V-72119."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use fremovexattr on 32bit systems, not in compliance with V-72119."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use fremovexattr on 64bit systems, not in compliance with V-72119."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use lremovexattr, V-72121
 function V72121 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use lremovexattr is enabled on 32bit systems, per V-72121."
-    local Success64="Auditing of successful/unsuccessful attempts to use lremovexattr is enabled on 64bit systems, per V-72121."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lremovexattr on 32bit systems, not in compliance with V-72121."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lremovexattr on 64bit systems, not in compliance with V-72121."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+lremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+lremovexattr\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+perm_mod\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use lremovexattr is enabled on 32bit systems, per V-72121."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use lremovexattr is enabled on 64bit systems, per V-72121."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use lremovexattr on 32bit systems, not in compliance with V-72121."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use lremovexattr on 64bit systems, not in compliance with V-72121."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S lremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( (grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use creat, V-72123
 function V72123 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+creat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+creat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+creat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+creat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use creat is enabled on 32bit systems, per V-72123."
-    local Success64="Auditing of successful/unsuccessful attempts to use creat is enabled on 64bit systems, per V-72123."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use creat on 32bit systems, not in compliance with V-72123."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use creat on 64bit systems, not in compliance with V-72123."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+creat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+creat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+creat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+creat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use creat is enabled on 32bit systems, per V-72123."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use creat is enabled on 64bit systems, per V-72123."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use creat on 32bit systems, not in compliance with V-72123."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use creat on 64bit systems, not in compliance with V-72123."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+  #  echo
+  #  grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+  #  grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+  #  (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S creat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+  #  (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S creat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+  #  ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+  #  echo
+  #  uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use open, V-72125
 function V72125 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+open\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+open\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+open\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+open\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use open is enabled on 32bit systems, per V-72125."
-    local Success64="Auditing of successful/unsuccessful attempts to use open is enabled on 64bit systems, per V-72125."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use open on 32bit systems, not in compliance with V-72125."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use open on 64bit systems, not in compliance with V-72125."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+open\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+open\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+open\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+open\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use open is enabled on 32bit systems, per V-72125."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use open is enabled on 64bit systems, per V-72125."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use open on 32bit systems, not in compliance with V-72125."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use open on 64bit systems, not in compliance with V-72125."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S open -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S open -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use openat, V-72127
 function V72127 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+openat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+openat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+openat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+openat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use openat is enabled on 32bit systems, per V-72127."
-    local Success64="Auditing of successful/unsuccessful attempts to use openat is enabled on 64bit systems, per V-72127."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use openat on 32bit systems, not in compliance with V-72127."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use openat on 64bit systems, not in compliance with V-72127."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+openat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+openat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+openat\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+openat\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use openat is enabled on 32bit systems, per V-72127."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use openat is enabled on 64bit systems, per V-72127."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use openat on 32bit systems, not in compliance with V-72127."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use openat on 64bit systems, not in compliance with V-72127."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S openat -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S openat -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use open_by_handle_at, V-72129
@@ -671,44 +671,44 @@ function V72129 () {
 
 #Set audit to audit of successful/unsuccessful attempts to use truncate, V-72131
 function V72131 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+truncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+truncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+truncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+truncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use truncate is enabled on 32bit systems, per V-72131."
-    local Success64="Auditing of successful/unsuccessful attempts to use truncate is enabled on 64bit systems, per V-72131."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use truncate on 32bit systems, not in compliance with V-72131."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use truncate on 64bit systems, not in compliance with V-72131."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+truncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+truncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+truncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+truncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use truncate is enabled on 32bit systems, per V-72131."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use truncate is enabled on 64bit systems, per V-72131."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use truncate on 32bit systems, not in compliance with V-72131."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use truncate on 64bit systems, not in compliance with V-72131."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S truncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S truncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use ftruncate, V-72133
 function V72133 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+ftruncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+ftruncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+ftruncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+ftruncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
-    local Success32="Auditing of successful/unsuccessful attempts to use ftruncate is enabled on 32bit systems, per V-72133."
-    local Success64="Auditing of successful/unsuccessful attempts to use ftruncate is enabled on 64bit systems, per V-72133."
-    local Failure32="Failed to set auditing of successful/unsuccessful attempts to use ftruncate on 32bit systems, not in compliance with V-72133."
-    local Failure64="Failed to set auditing of successful/unsuccessful attempts to use ftruncate on 64bit systems, not in compliance with V-72133."
+ #   local Regex1="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+ftruncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex2="^\s*-a\s+always,exit\s+-F\s+arch=b32\s+-S\s+ftruncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex3="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+ftruncate\s+-F\s+exit=-EPERM\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Regex4="^\s*-a\s+always,exit\s+-F\s+arch=b64\s+-S\s+ftruncate\s+-F\s+exit=-EACCES\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+access\s*(#.*)?$"
+ #   local Success32="Auditing of successful/unsuccessful attempts to use ftruncate is enabled on 32bit systems, per V-72133."
+ #   local Success64="Auditing of successful/unsuccessful attempts to use ftruncate is enabled on 64bit systems, per V-72133."
+ #   local Failure32="Failed to set auditing of successful/unsuccessful attempts to use ftruncate on 32bit systems, not in compliance with V-72133."
+ #   local Failure64="Failed to set auditing of successful/unsuccessful attempts to use ftruncate on 64bit systems, not in compliance with V-72133."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
-    ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
-    echo
-    uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F arch=b32 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   (uname -p | grep -q 'x86_64' && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) || echo "-a always,exit -F arch=b64 -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access" >> /etc/audit/rules.d/audit.rules
+ #   ( (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex2" /etc/audit/rules.d/audit.rules) && echo "$Success32") || { echo "$Failure32" ; exit 1; }
+ #   echo
+ #   uname -p | grep -q 'x86_64' && ( ( (grep -E -q "$Regex3" /etc/audit/rules.d/audit.rules && grep -E -q "$Regex4" /etc/audit/rules.d/audit.rules) && echo "$Success64") || { echo "$Failure64" ; exit 1; } )
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use semanage, V-72135
@@ -768,13 +768,13 @@ function V72145 () {
 
 #Set audit to audit when successful account access events occur, V-72147
 function V72147 () {
-    local Regex1="^\s*-w\s+/var/log/lastlog\s+-p\s+wa\s+-k\s+logins\s*(#.*)?$"
-    local Success="Auditing of successful account access events occur is enabled, per V-72147."
-    local Failure="Failed to set auditing of when successful account access events occur, not in compliance with V-72147."
+ #   local Regex1="^\s*-w\s+/var/log/lastlog\s+-p\s+wa\s+-k\s+logins\s*(#.*)?$"
+ #   local Success="Auditing of successful account access events occur is enabled, per V-72147."
+ #   local Failure="Failed to set auditing of when successful account access events occur, not in compliance with V-72147."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /var/log/lastlog -p wa -k logins" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+ #   echo
+ #   grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /var/log/lastlog -p wa -k logins" >> /etc/audit/rules.d/audit.rules
+ #   (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use passwd, V-72149
@@ -943,13 +943,13 @@ function V72177 () {
 
 #Set audit to audit of successful/unsuccessful attempts to use ssh-keysign, V-72179
 function V72179 () {
-    local Regex1="^\s*-a\s+always,exit\s+-F\s+path=/usr/libexec/openssh/ssh-keysign\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+privileged-ssh\s*(#.*)?$"
-    local Success="Auditing of successful/unsuccessful attempts to use ssh-keysign, per V-72179."
-    local Failure="Failed to set auditing of when successful/unsuccessful attempts to use ssh-keysign occur, not in compliance with V-72179."
+#    local Regex1="^\s*-a\s+always,exit\s+-F\s+path=/usr/libexec/openssh/ssh-keysign\s+-F\s+auid>=1000\s+-F\s+auid!=4294967295\s+-k\s+privileged-ssh\s*(#.*)?$"
+#    local Success="Auditing of successful/unsuccessful attempts to use ssh-keysign, per V-72179."
+#    local Failure="Failed to set auditing of when successful/unsuccessful attempts to use ssh-keysign occur, not in compliance with V-72179."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F path=/usr/libexec/openssh/ssh-keysign -F auid>=1000 -F auid!=4294967295 -k privileged-ssh" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-a always,exit -F path=/usr/libexec/openssh/ssh-keysign -F auid>=1000 -F auid!=4294967295 -k privileged-ssh" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use crontab, V-72183
@@ -1022,13 +1022,13 @@ function V72191 () {
 
 #Set audit to audit all account creations, modifications, disabling, and termination events that affect "/etc/passwd", V-72197
 function V72197 () {
-    local Regex1="^\s*-w\s+/etc/passwd\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
-    local Success="Auditing of all account creations, modifications, disabling, and termination events that affect '/etc/passwd', per V-72197."
-    local Failure="Failed to set auditing of all account creations, modifications, disabling, and termination events that affect '/etc/passwd', not in compliance V-72197."
+#    local Regex1="^\s*-w\s+/etc/passwd\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
+#    local Success="Auditing of all account creations, modifications, disabling, and termination events that affect '/etc/passwd', per V-72197."
+#    local Failure="Failed to set auditing of all account creations, modifications, disabling, and termination events that affect '/etc/passwd', not in compliance V-72197."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/passwd -p wa -k identity" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/passwd -p wa -k identity" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use rename, V-72199
@@ -1135,31 +1135,31 @@ function V72223 () {
 
 #Set timeout period, V-72237
 function V72237 () {
-    local Regex1="^(\s*)#ClientAliveInterval\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#ClientAliveInterval\s+\S+(\s*#.*)?\s*$/\ClientAliveInterval 600\2/"
-    local Regex3="^(\s*)ClientAliveInterval\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)ClientAliveInterval\s+\S+(\s*#.*)?\s*$/\ClientAliveInterval 600\2/"
-    local Regex5="^(\s*)ClientAliveInterval\s*600?\s*$"
-    local Success="Set SSH user timeout period to 600secs, per V-72237."
-    local Failure="Failed to set SSH user timeout period to 600secs, not in compliance V-72237."
+#    local Regex1="^(\s*)#ClientAliveInterval\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#ClientAliveInterval\s+\S+(\s*#.*)?\s*$/\ClientAliveInterval 600\2/"
+#    local Regex3="^(\s*)ClientAliveInterval\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)ClientAliveInterval\s+\S+(\s*#.*)?\s*$/\ClientAliveInterval 600\2/"
+#    local Regex5="^(\s*)ClientAliveInterval\s*600?\s*$"
+#    local Success="Set SSH user timeout period to 600secs, per V-72237."
+#    local Failure="Failed to set SSH user timeout period to 600secs, not in compliance V-72237."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "ClientAliveInterval 600" >> /etc/ssh/sshd_config
-    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "ClientAliveInterval 600" >> /etc/ssh/sshd_config
+#    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set terminate user session after timeout, V-72241
 function V72241 () {
-    local Regex1="^(\s*)#ClientAliveCountMax\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#ClientAliveCountMax\s+\S+(\s*#.*)?\s*$/\ClientAliveCountMax 0\2/"
-    local Regex3="s/^(\s*)ClientAliveCountMax\s+\S+(\s*#.*)?\s*$/\ClientAliveCountMax 0\2/"
-    local Regex4="^(\s*)ClientAliveCountMax\s*0?\s*$"
-    local Success="Set SSH user sesstions to terminate after session timeout, per V-72241."
-    local Failure="Failed to set SSH user sesstions to terminate after session timeout, not in compliance V-72241."
+ #   local Regex1="^(\s*)#ClientAliveCountMax\s+\S+(\s*#.*)?\s*$"
+ #   local Regex2="s/^(\s*)#ClientAliveCountMax\s+\S+(\s*#.*)?\s*$/\ClientAliveCountMax 0\2/"
+ #   local Regex3="s/^(\s*)ClientAliveCountMax\s+\S+(\s*#.*)?\s*$/\ClientAliveCountMax 0\2/"
+ #   local Regex4="^(\s*)ClientAliveCountMax\s*0?\s*$"
+ #   local Success="Set SSH user sesstions to terminate after session timeout, per V-72241."
+ #   local Failure="Failed to set SSH user sesstions to terminate after session timeout, not in compliance V-72241."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex3" /etc/ssh/sshd_config) ) || echo "ClientAliveCountMax 0" >> /etc/ssh/sshd_config
-    (grep -E -q "$Regex4" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
+ #   echo
+ #   ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex3" /etc/ssh/sshd_config) ) || echo "ClientAliveCountMax 0" >> /etc/ssh/sshd_config
+ #   (grep -E -q "$Regex4" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set to not allow authentication using known host, V-72243
@@ -1194,17 +1194,17 @@ function V72245 () {
 
 #Set SSH to prevent root logon, V-72247
 function V72247 () {
-    local Regex1="^(\s*)#PermitRootLogin\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#PermitRootLogin\s+\S+(\s*#.*)?\s*$/\PermitRootLogin no\2/"
-    local Regex3="^(\s*)PermitRootLogin\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)PermitRootLogin\s+\S+(\s*#.*)?\s*$/\PermitRootLogin no\2/"
-    local Regex5="^(\s*)PermitRootLogin\s*no?\s*$"
-    local Success="Set SSH to not allow connections from root, per V-72247."
-    local Failure="Failed to set SSH to not allow connections from root, not in compliance V-72247."
+#    local Regex1="^(\s*)#PermitRootLogin\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#PermitRootLogin\s+\S+(\s*#.*)?\s*$/\PermitRootLogin no\2/"
+#    local Regex3="^(\s*)PermitRootLogin\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)PermitRootLogin\s+\S+(\s*#.*)?\s*$/\PermitRootLogin no\2/"
+#    local Regex5="^(\s*)PermitRootLogin\s*no?\s*$"
+#    local Success="Set SSH to not allow connections from root, per V-72247."
+#    local Failure="Failed to set SSH to not allow connections from root, not in compliance V-72247."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "PermitRootLogin no" >> /etc/ssh/sshd_config
-    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "PermitRootLogin no" >> /etc/ssh/sshd_config
+#    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set to not allow authentication using known host, V-72249
@@ -1237,17 +1237,17 @@ function V72259 () {
 
 #Disable Kerberos over SSH, V-72261
 function V72261 () {
-    local Regex1="^(\s*)#KerberosAuthentication\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#KerberosAuthentication\s+\S+(\s*#.*)?\s*$/\KerberosAuthentication no\2/"
-    local Regex3="^(\s*)KerberosAuthentication\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)KerberosAuthentication\s+\S+(\s*#.*)?\s*$/\KerberosAuthentication no\2/"
-    local Regex5="^(\s*)KerberosAuthentication\s*no?\s*$"
-    local Success="Set SSH to not allow authentication using KerberosAuthentication authentication, per V-72261."
-    local Failure="Failed to set SSH to not allow authentication using KerberosAuthentication authentication, not in compliance V-72261."
+#    local Regex1="^(\s*)#KerberosAuthentication\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#KerberosAuthentication\s+\S+(\s*#.*)?\s*$/\KerberosAuthentication no\2/"
+#    local Regex3="^(\s*)KerberosAuthentication\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)KerberosAuthentication\s+\S+(\s*#.*)?\s*$/\KerberosAuthentication no\2/"
+#    local Regex5="^(\s*)KerberosAuthentication\s*no?\s*$"
+#    local Success="Set SSH to not allow authentication using KerberosAuthentication authentication, per V-72261."
+#    local Failure="Failed to set SSH to not allow authentication using KerberosAuthentication authentication, not in compliance V-72261."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "KerberosAuthentication no" >> /etc/ssh/sshd_config
-    (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#   ( (grep -E -q "$Regex1" /etc/ssh/sshd_config && sed -ri "$Regex2" /etc/ssh/sshd_config) || (grep -E -q "$Regex3" /etc/ssh/sshd_config && sed -ri "$Regex4" /etc/ssh/sshd_config) ) || echo "KerberosAuthentication no" >> /etc/ssh/sshd_config
+#   (grep -E -q "$Regex5" /etc/ssh/sshd_config && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set SSH to perform strict mode checking of home dir configuraiton files, V-72263
@@ -1282,226 +1282,226 @@ function V72267 () {
 
 #Set OS to not accept IPv4 source-routed packets, V-72283
 function V72283 () {
-    local Regex1="^(\s*)#net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_source_route = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_source_route = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.all.accept_source_route\s*=\s*0?\s*$"
-    local Success="Set system to not accept IPv4 source-routed packets, per V-72283."
-    local Failure="Failed to set system to not accept IPv4 source-routed packets, not in compliance V-72283."
+#    local Regex1="^(\s*)#net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_source_route = 0\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_source_route = 0\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.all.accept_source_route\s*=\s*0?\s*$"
+#    local Success="Set system to not accept IPv4 source-routed packets, per V-72283."
+#    local Failure="Failed to set system to not accept IPv4 source-routed packets, not in compliance V-72283."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not accept IPv4 source-routed packets by default, V-72285
 function V72285 () {
-    local Regex1="^(\s*)#net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_source_route = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_source_route = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.default.accept_source_route\s*=\s*0?\s*$"
-    local Success="Set system to not accept IPv4 source-routed packets by default, per V-72285."
-    local Failure="Failed to set system to not accept IPv4 source-routed packets by default, not in compliance V-72285."
+#    local Regex1="^(\s*)#net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_source_route = 0\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.default.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_source_route = 0\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.default.accept_source_route\s*=\s*0?\s*$"
+#    local Success="Set system to not accept IPv4 source-routed packets by default, per V-72285."
+#    local Failure="Failed to set system to not accept IPv4 source-routed packets by default, not in compliance V-72285."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.accept_source_route = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.accept_source_route = 0" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not respond to ICMP, V-72287
 function V72287 () {
-    local Regex1="^(\s*)#net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$/\net.ipv4.icmp_echo_ignore_broadcasts = 1\2/"
-    local Regex3="^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$/\net.ipv4.icmp_echo_ignore_broadcasts = 1\2/"
-    local Regex5="^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s*=\s*1?\s*$"
-    local Success="Set system to not respond to ICMP on IPv4, per V-72287."
-    local Failure="Failed to set system to not respond to ICMP on IPv4, not in compliance V-72287."
+ #   local Regex1="^(\s*)#net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$"
+ #   local Regex2="s/^(\s*)#net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$/\net.ipv4.icmp_echo_ignore_broadcasts = 1\2/"
+ #   local Regex3="^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$"
+ #   local Regex4="s/^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s+\S+(\s*#.*)?\s*$/\net.ipv4.icmp_echo_ignore_broadcasts = 1\2/"
+ #   local Regex5="^(\s*)net.ipv4.icmp_echo_ignore_broadcasts\s*=\s*1?\s*$"
+ #   local Success="Set system to not respond to ICMP on IPv4, per V-72287."
+ #   local Failure="Failed to set system to not respond to ICMP on IPv4, not in compliance V-72287."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.icmp_echo_ignore_broadcasts = 1" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+  #  echo
+  #  ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.icmp_echo_ignore_broadcasts = 1" >> /etc/sysctl.conf
+  #  (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not accept ICMP redirects, V-72289
 function V72289 () {
-    local Regex1="^(\s*)#net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_redirects = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_redirects = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.default.accept_redirects\s*=\s*0?\s*$"
-    local Success="Set system to not accept ICMP redirects on IPv4, per V-72289."
-    local Failure="Failed to set system to not accept ICMP redirects on IPv4, not in compliance V-72289."
+  #  local Regex1="^(\s*)#net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$"
+  #  local Regex2="s/^(\s*)#net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_redirects = 0\2/"
+  #  local Regex3="^(\s*)net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$"
+  #  local Regex4="s/^(\s*)net.ipv4.conf.default.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.accept_redirects = 0\2/"
+  #  local Regex5="^(\s*)net.ipv4.conf.default.accept_redirects\s*=\s*0?\s*$"
+  #  local Success="Set system to not accept ICMP redirects on IPv4, per V-72289."
+  #  local Failure="Failed to set system to not accept ICMP redirects on IPv4, not in compliance V-72289."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.accept_redirects = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+   # echo
+   # ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.accept_redirects = 0" >> /etc/sysctl.conf
+   # (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not allow interfaces to perform ICMP redirects, V-72291
 function V72291 () {
-    local Regex1="^(\s*)#net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.send_redirects = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.send_redirects = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.default.send_redirects\s*=\s*0?\s*$"
-    local Success="Set system to not peform ICMP redirects on IPv4 by default, per V-72291."
-    local Failure="Failed to set system to not peform ICMP redirects on IPv4 by default, not in compliance V-72291."
+ #   local Regex1="^(\s*)#net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$"
+ #   local Regex2="s/^(\s*)#net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.send_redirects = 0\2/"
+ #   local Regex3="^(\s*)net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$"
+ #   local Regex4="s/^(\s*)net.ipv4.conf.default.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.send_redirects = 0\2/"
+ #   local Regex5="^(\s*)net.ipv4.conf.default.send_redirects\s*=\s*0?\s*$"
+ #   local Success="Set system to not peform ICMP redirects on IPv4 by default, per V-72291."
+ #   local Failure="Failed to set system to not peform ICMP redirects on IPv4 by default, not in compliance V-72291."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.send_redirects = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+ #   echo
+ #   ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.send_redirects = 0" >> /etc/sysctl.conf
+ #   (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not allow sending ICMP redirects, V-72293
 function V72293 () {
-    local Regex1="^(\s*)#net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.send_redirects = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.send_redirects = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.all.send_redirects\s*=\s*0?\s*$"
-    local Success="Set system to not send ICMP redirects on IPv4, per V-72293."
-    local Failure="Failed to set system to not send ICMP redirects on IPv4, not in compliance V-72293."
+#    local Regex1="^(\s*)#net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.send_redirects = 0\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.all.send_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.send_redirects = 0\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.all.send_redirects\s*=\s*0?\s*$"
+#    local Success="Set system to not send ICMP redirects on IPv4, per V-72293."
+#    local Failure="Failed to set system to not send ICMP redirects on IPv4, not in compliance V-72293."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.send_redirects = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.send_redirects = 0" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Prevent unrestricted mail relaying, V-72297
 function V72297 () {
-    local Regex1="^(\s*)smtpd_client_restrictions\s*=\s*permit_mynetworks,reject\s*$"
-    local Success="Set postfix from being used as an unrestricted mail relay, per V-72297."
-    local Failure="Failed to set postfix from being used as an unrestricted mail relay, not in compliance V-72297."
+#    local Regex1="^(\s*)smtpd_client_restrictions\s*=\s*permit_mynetworks,reject\s*$"
+#    local Success="Set postfix from being used as an unrestricted mail relay, per V-72297."
+#    local Failure="Failed to set postfix from being used as an unrestricted mail relay, not in compliance V-72297."#
 
-    echo
-    postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'
-    (postconf -n smtpd_client_restrictions | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    postconf -e 'smtpd_client_restrictions = permit_mynetworks,reject'
+#    (postconf -n smtpd_client_restrictions | grep -E -q "$Regex1" && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not perform packet forwarding unless system is a router, V-72309
 function V72309 () {
-    local Regex1="^(\s*)#net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$/\net.ipv4.ip_forward = 0\2/"
-    local Regex3="^(\s*)net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$/\net.ipv4.ip_forward = 0\2/"
-    local Regex5="^(\s*)net.ipv4.ip_forward\s*=\s*0?\s*$"
-    local Success="Set system to not perform package forwarding, per V-72309."
-    local Failure="Failed to set system to not perform package forwarding, not in compliance V-72309."
+#    local Regex1="^(\s*)#net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$/\net.ipv4.ip_forward = 0\2/"
+#    local Regex3="^(\s*)net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.ip_forward\s+\S+(\s*#.*)?\s*$/\net.ipv4.ip_forward = 0\2/"
+#    local Regex5="^(\s*)net.ipv4.ip_forward\s*=\s*0?\s*$"
+#    local Success="Set system to not perform package forwarding, per V-72309."
+#    local Failure="Failed to set system to not perform package forwarding, not in compliance V-72309."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.ip_forward = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.ip_forward = 0" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to not perform packet forwarding unless system is a router, V-72319
 function V72319 () {
-    local Regex1="^(\s*)#net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv6.conf.all.accept_source_route = 0\2/"
-    local Regex3="^(\s*)net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv6.conf.all.accept_source_route = 0\2/"
-    local Regex5="^(\s*)net.ipv6.conf.all.accept_source_route\s*=\s*0?\s*$"
-    local Success="Set system to not accept IPv6 source-routed packets, per V-72319."
-    local Failure="Failed to set system to not accept IPv6 source-routed packets, not in compliance V-72319."
+ #   local Regex1="^(\s*)#net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
+ #   local Regex2="s/^(\s*)#net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv6.conf.all.accept_source_route = 0\2/"
+ #   local Regex3="^(\s*)net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$"
+ #   local Regex4="s/^(\s*)net.ipv6.conf.all.accept_source_route\s+\S+(\s*#.*)?\s*$/\net.ipv6.conf.all.accept_source_route = 0\2/"
+ #   local Regex5="^(\s*)net.ipv6.conf.all.accept_source_route\s*=\s*0?\s*$"
+ #   local Success="Set system to not accept IPv6 source-routed packets, per V-72319."
+ #   local Failure="Failed to set system to not accept IPv6 source-routed packets, not in compliance V-72319."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv6.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+ #   echo
+ #   ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv6.conf.all.accept_source_route = 0" >> /etc/sysctl.conf
+ #   (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit all account creations, modifications, disabling, and termination events that affect "/etc/group", V-73165
 function V73165 () {
-    local Regex1="^\s*-w\s+/etc/group\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
-    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/group', per V-73165."
-    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/group', not in compliance V-73165."
+#    local Regex1="^\s*-w\s+/etc/group\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
+#    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/group', per V-73165."
+#    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/group', not in compliance V-73165."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/group -p wa -k identity" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/group -p wa -k identity" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit all account creations, modifications, disabling, and termination events that affect "/etc/shadow", V-73167
 function V73167 () {
-    local Regex1="^\s*-w\s+/etc/shadow\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
-    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/shadow', per V-73167."
-    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/shadow', not in compliance V-73167."
+#    local Regex1="^\s*-w\s+/etc/shadow\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
+#    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/shadow', per V-73167."
+#    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/shadow', not in compliance V-73167."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/shadow -p wa -k identity" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/shadow -p wa -k identity" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit all account creations, modifications, disabling, and termination events that affect "/etc/opasswd", V-73173
 function V73173 () {
-    local Regex1="^\s*-w\s+/etc/security/opasswd\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
-    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/opasswd', per V-73173."
-    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/opasswd', not in compliance V-73173."
+#    local Regex1="^\s*-w\s+/etc/security/opasswd\s+-p\s+wa\s+-k\s+identity\s*(#.*)?$"
+#    local Success="Set to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/opasswd', per V-73173."
+#    local Failure="Failed to enable auditing of all account creations, modifications, disabling, and termination events the affect '/etc/opasswd', not in compliance V-73173."
 
-    echo
-    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/security/opasswd -p wa -k identity" >> /etc/audit/rules.d/audit.rules
-    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules || echo "-w /etc/security/opasswd -p wa -k identity" >> /etc/audit/rules.d/audit.rules
+#    (grep -E -q "$Regex1" /etc/audit/rules.d/audit.rules && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to ignore ICMP redirects, V-73175
 function V73175 () {
-    local Regex1="^(\s*)#net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_redirects = 0\2/"
-    local Regex3="^(\s*)net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_redirects = 0\2/"
-    local Regex5="^(\s*)net.ipv4.conf.all.accept_redirects\s*=\s*0?\s*$"
-    local Success="Set system to ignore IPv4 ICMP redirect messages, per V-73175."
-    local Failure="Failed to set system to ignore IPv4 ICMP redirect messages, not in compliance V-73175."
+#    local Regex1="^(\s*)#net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_redirects = 0\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.all.accept_redirects\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.accept_redirects = 0\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.all.accept_redirects\s*=\s*0?\s*$"
+#    local Success="Set system to ignore IPv4 ICMP redirect messages, per V-73175."
+#    local Failure="Failed to set system to ignore IPv4 ICMP redirect messages, not in compliance V-73175."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.accept_redirects = 0" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.accept_redirects = 0" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Disable DCCP kernel module, V-77821.
 function V77821 () {
-    local Regex1="^(\s*)#install dccp /bin/true\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#install dccp /bin/true\s+\S+(\s*#.*)?\s*$/\install dccp /bin/true\2/"
-    local Regex3="^(\s*)#blacklist dccp\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)#blacklist dccp\s+\S+(\s*#.*)?\s*$/\blacklist dccp\2/"
-    local Regex5="^(\s*)install\s*dccp\s*/bin/true?\s*$"
-    local Regex6="^(\s*)blacklist\s*dccp?\s*$"
-    local Success="Disabled DCCP on the system, per V-77821."
-    local Failure="Failed to disable DCCP on the system, not in compliance V-77821."
+#    local Regex1="^(\s*)#install dccp /bin/true\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#install dccp /bin/true\s+\S+(\s*#.*)?\s*$/\install dccp /bin/true\2/"
+#    local Regex3="^(\s*)#blacklist dccp\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)#blacklist dccp\s+\S+(\s*#.*)?\s*$/\blacklist dccp\2/"
+#    local Regex5="^(\s*)install\s*dccp\s*/bin/true?\s*$"
+#    local Regex6="^(\s*)blacklist\s*dccp?\s*$"
+#    local Success="Disabled DCCP on the system, per V-77821."
+#    local Failure="Failed to disable DCCP on the system, not in compliance V-77821."
 
-    echo
-    if [ -f "/etc/modprobe.d/dccp.conf" ]
-    then
-        (grep -E -q "$Regex1" /etc/modprobe.d/dccp.conf && sed -ri "$Regex2" /etc/modprobe.d/dccp.conf) || echo "install dccp /bin/true" >> /etc/modprobe.d/dccp.conf
-    else
-        echo -e "install dccp /bin/true" >> /etc/modprobe.d/dccp.conf
-    fi
+#    echo
+#    if [ -f "/etc/modprobe.d/dccp.conf" ]
+#    then
+#        (grep -E -q "$Regex1" /etc/modprobe.d/dccp.conf && sed -ri "$Regex2" /etc/modprobe.d/dccp.conf) || echo "install dccp /bin/true" >> /etc/modprobe.d/dccp.conf
+#    else
+#        echo -e "install dccp /bin/true" >> /etc/modprobe.d/dccp.conf
+#    fi
 
-    if [ -f "/etc/modprobe.d/blacklist.conf" ]
-    then
-        (grep -E -q "$Regex3" /etc/modprobe.d/blacklist.conf && sed -ri "$Regex4" /etc/modprobe.d/blacklist.conf) || echo "blacklist dccp" >> /etc/modprobe.d/blacklist.conf
-    else
-        echo -e "blacklist dccp" >> /etc/modprobe.d/blacklist.conf
-    fi
-    (grep -E -q "$Regex5" /etc/modprobe.d/dccp.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
-    echo
-    (grep -E -q "$Regex6" /etc/modprobe.d/blacklist.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    if [ -f "/etc/modprobe.d/blacklist.conf" ]
+#    then
+#        (grep -E -q "$Regex3" /etc/modprobe.d/blacklist.conf && sed -ri "$Regex4" /etc/modprobe.d/blacklist.conf) || echo "blacklist dccp" >> /etc/modprobe.d/blacklist.conf
+#    else
+#        echo -e "blacklist dccp" >> /etc/modprobe.d/blacklist.conf
+#    fi
+#    (grep -E -q "$Regex5" /etc/modprobe.d/dccp.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    (grep -E -q "$Regex6" /etc/modprobe.d/blacklist.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to use virtual address randomization, V-77825
 function V77825 () {
-    local Regex1="^(\s*)#kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$/\kernel.randomize_va_space = 2\2/"
-    local Regex3="^(\s*)kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$/\kernel.randomize_va_space = 2\2/"
-    local Regex5="^(\s*)kernel.randomize_va_space\s*=\s*2?\s*$"
-    local Success="Set system to use virtual address space randomization, per V-77825."
-    local Failure="Failed to set system to use virtual address space randomization, not in compliance V-77825."
+#    local Regex1="^(\s*)#kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$/\kernel.randomize_va_space = 2\2/"
+#    local Regex3="^(\s*)kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)kernel.randomize_va_space\s+\S+(\s*#.*)?\s*$/\kernel.randomize_va_space = 2\2/"
+#    local Regex5="^(\s*)kernel.randomize_va_space\s*=\s*2?\s*$"
+#    local Success="Set system to use virtual address space randomization, per V-77825."
+#    local Failure="Failed to set system to use virtual address space randomization, not in compliance V-77825."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "kernel.randomize_va_space = 2" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "kernel.randomize_va_space = 2" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set audit to audit of successful/unsuccessful attempts to use create_module, V-78999
@@ -1540,32 +1540,32 @@ function V79001 () {
 
 #Set OS to use a reverse-path filter, V-92251
 function V92251 () {
-    local Regex1="^(\s*)#net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.rp_filter = 1\2/"
-    local Regex3="^(\s*)net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.rp_filter = 1\2/"
-    local Regex5="^(\s*)net.ipv4.conf.all.rp_filter\s*=\s*1?\s*$"
-    local Success="Set system to use reverse-path filter on IPv4, per V-92251."
-    local Failure="Failed to set system to use reverse-path filter on IPv4, not in compliance V-92251."
+#    local Regex1="^(\s*)#net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.rp_filter = 1\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.all.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.all.rp_filter = 1\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.all.rp_filter\s*=\s*1?\s*$"
+#    local Success="Set system to use reverse-path filter on IPv4, per V-92251."
+#    local Failure="Failed to set system to use reverse-path filter on IPv4, not in compliance V-92251."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Set OS to use a reverse-path filter, V-92253
 function V92253 () {
-    local Regex1="^(\s*)#net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$"
-    local Regex2="s/^(\s*)#net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.rp_filter = 1\2/"
-    local Regex3="^(\s*)net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$"
-    local Regex4="s/^(\s*)net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.rp_filter = 1\2/"
-    local Regex5="^(\s*)net.ipv4.conf.default.rp_filter\s*=\s*1?\s*$"
-    local Success="Set system to use reverse-path filter on IPv4 by default, per V-92251."
-    local Failure="Failed to set system to use reverse-path filter on IPv4 by default, not in compliance V-92251."
+#    local Regex1="^(\s*)#net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$"
+#    local Regex2="s/^(\s*)#net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.rp_filter = 1\2/"
+#    local Regex3="^(\s*)net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$"
+#    local Regex4="s/^(\s*)net.ipv4.conf.default.rp_filter\s+\S+(\s*#.*)?\s*$/\net.ipv4.conf.default.rp_filter = 1\2/"
+#    local Regex5="^(\s*)net.ipv4.conf.default.rp_filter\s*=\s*1?\s*$"
+#    local Success="Set system to use reverse-path filter on IPv4 by default, per V-92251."
+#    local Failure="Failed to set system to use reverse-path filter on IPv4 by default, not in compliance V-92251."
 
-    echo
-    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.rp_filter = 1" >> /etc/sysctl.conf
-    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
+#    echo
+#    ( (grep -E -q "$Regex1" /etc/sysctl.conf && sed -ri "$Regex2" /etc/sysctl.conf) || (grep -E -q "$Regex3" /etc/sysctl.conf && sed -ri "$Regex4" /etc/sysctl.conf) ) || echo "net.ipv4.conf.default.rp_filter = 1" >> /etc/sysctl.conf
+#    (grep -E -q "$Regex5" /etc/sysctl.conf && echo "$Success") || { echo "$Failure" ; exit 1; }
 }
 
 #Apply all CATIIs
